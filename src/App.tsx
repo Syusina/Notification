@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Notification from './components/Notification/Notification';
 import { simulateServer } from './utils/simulateServer';
 import styles from './App.module.css';
@@ -31,9 +32,17 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <button className={styles.btnStart} onClick={handlerClick} >Нажми на меня</button>
-      <Notification status={notification.status} label={notification.label} text={notification.text} buttonClicked={buttonClicked}/>
+    <div className={styles.wrapper}>
+      {createPortal(
+        <Notification 
+          status={notification.status}
+          label={notification.label}
+          text={notification.text}
+          buttonClicked={buttonClicked}
+        />,
+        document.body
+      )}
+      <button className={styles.btnStart} onClick={handlerClick}>Сохранить изменения</button>
     </div>
   );
 }

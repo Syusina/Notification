@@ -74,8 +74,8 @@ const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
               className={styles.icon}
             />
             <div className={styles.info}>
-              <div className={styles.label}>{label}</div>
-              <div className={styles.text}>{text}</div>
+              <label className={styles.label}>{label}</label>
+              <p className={styles.text}>{text}</p>
               <div className={styles.progressBar}>
                 <div className={styles.progressValue} style={{ width: `${value}%` }}></div>
               </div>
