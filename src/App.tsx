@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Notification from './components/Notification/Notification';
+import { simulateServer } from './utils/simulateServer';
+import styles from './App.module.css';
 
-function App() {
+const App = () => {
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const [notification, setNotification] = useState({
+    status: 'success',
+    label: 'Успешно',
+    text: 'Изменения успешно сохранены',
+  });
+
+  const handlerClick = async () => {
+    try {
+      await simulateServer();
+      setButtonClicked(!buttonClicked);
+      setNotification({
+        status: 'success',
+        label: 'Успешно',
+        text: 'Изменения успешно сохранены',
+      });
+    } catch (error) {
+      setButtonClicked(!buttonClicked);
+      setNotification({
+        status: 'error',
+        label: 'Изменения не сохранены',
+        text: 'Потеря интернет соединения',
+      });
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button className={styles.btnStart} onClick={handlerClick} >Нажми на меня</button>
+      <Notification status={notification.status} label={notification.label} text={notification.text} buttonClicked={buttonClicked}/>
     </div>
   );
 }

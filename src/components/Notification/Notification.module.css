@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.wrapper {
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  width: 400px;
+  height: 100px;
+  padding: 20px;
+  margin: auto;
+}
+
+.notification {
+  display: flex;
+  padding: 25px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  padding-right:12px;
+}
+
+.info {
+  display: block;
+  text-align: left;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 22px;
+  color: #343841;
+}
+
+.text {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16px;
+  color: #7b7c7d;
+}
+
+.line {
+  background: #c7c9c8;
+  width: 300px;
+  height: 6px;
+  border-radius: 3px;
+  margin: 6px 0;
+}
+
+.progressBar {
+  background: #c7c9c8;
+  width: 300px;
+  height: 6px;
+  border-radius: 3px;
+  margin: 6px 0;
+}
+
+.progressValue {
+  height: 6px;
+  border-radius: 3px;
+  background: #4B4E51;
+  width: 0;
+  transition: width;
+}
