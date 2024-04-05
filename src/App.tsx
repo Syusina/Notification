@@ -4,9 +4,17 @@ import Notification from './components/Notification/Notification';
 import { simulateServer } from './utils/simulateServer';
 import styles from './App.module.css';
 
+type NotificationStatus = 'success' | 'error';
+
+interface Notification {
+  status: NotificationStatus;
+  label: string;
+  text: string;
+}
+
 const App = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [notification, setNotification] = useState({
+  const [notification, setNotification] = useState<Notification>({
     status: 'success',
     label: 'Успешно',
     text: 'Изменения успешно сохранены',
@@ -42,7 +50,8 @@ const App = () => {
         />,
         document.body
       )}
-      <button className={styles.btnStart} onClick={handlerClick}>Сохранить изменения</button>
+      <button
+        className={styles.btnStart} onClick={handlerClick}>Сохранить изменения</button>
     </div>
   );
 }

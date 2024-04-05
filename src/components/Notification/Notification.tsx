@@ -1,10 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './Notification.module.css';
-import successIcon from './success.png';
-import errorIcon from './error.png';
+import successIcon from './images/success.png';
+import errorIcon from './images/error.png';
+
+type NotificationStatus = 'success' | 'error';
 
 interface Props {
-  status: string;
+  status: NotificationStatus;
   label: string;
   text: string;
   buttonClicked: boolean;
@@ -13,12 +15,13 @@ interface Props {
 const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
   const [value, setValue] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [count, setCount] = useState<any>(null);
+  const [count, setCount] = useState<NodeJS.Timeout | null>(null);
+
   const duration = 3000;
-  let currentValue = 0;
   const interval = 30;
   const maxValue = 100;
   const step = (maxValue / (duration / interval));
+  let currentValue = 0;
 
   useEffect(() => {
     const count = setInterval(() => {
@@ -46,7 +49,7 @@ const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
     if (count) {
       clearInterval(count);
     }
-  }
+  };
 
   const downMouse = () => {
     currentValue = value;
@@ -59,7 +62,6 @@ const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
       }
       currentValue += step;
     }, interval);
-  
     setCount(count);
   };
 
