@@ -6,9 +6,9 @@ import errorIcon from './images/error.png';
 import { ProgressBar } from './ProgressBar/ProgressBar';
 import { NotificationProps, NotificationStatus } from '../../App';
 
-const notification = document.getElementById('notification') as HTMLElement;
-
 const Notification: FC<NotificationProps> = ({ status, label, text }) => {
+  const notification = document.getElementById('notification') as HTMLElement;
+
   const [value, setValue] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [count, setCount] = useState<NodeJS.Timeout | null>(null);
@@ -68,8 +68,7 @@ const Notification: FC<NotificationProps> = ({ status, label, text }) => {
     return errorIcon;
   };
 
-  return (
-    createPortal(
+  return createPortal(
     <>
       {isVisible && (
         <div className={styles.wrapper} onMouseEnter={handelMouseFocus} onMouseLeave={handleMouseDown}>
@@ -88,7 +87,6 @@ const Notification: FC<NotificationProps> = ({ status, label, text }) => {
         </div>
       )}
     </>, notification)
-  )
 };
 
 export default Notification;
