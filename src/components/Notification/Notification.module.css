@@ -52,18 +52,3 @@
   margin: 6px 0;
 }
 
-.progressBar {
-  background: #c7c9c8;
-  width: 300px;
-  height: 6px;
-  border-radius: 3px;
-  margin: 6px 0;
-}
-
-.progressValue {
-  height: 6px;
-  border-radius: 3px;
-  background: #4B4E51;
-  width: 0;
-  transition: width;
-}

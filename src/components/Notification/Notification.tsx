@@ -1,18 +1,14 @@
 import { FC, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './Notification.module.css';
 import successIcon from './images/success.png';
 import errorIcon from './images/error.png';
+import { ProgressBar } from './ProgressBar/ProgressBar';
+import { NotificationProps, NotificationStatus } from '../../App';
 
-type NotificationStatus = 'success' | 'error';
+const notification = document.getElementById('notification') as HTMLElement;
 
-interface Props {
-  status: NotificationStatus;
-  label: string;
-  text: string;
-  buttonClicked: boolean;
-}
-
-const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
+const Notification: FC<NotificationProps> = ({ status, label, text }) => {
   const [value, setValue] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [count, setCount] = useState<NodeJS.Timeout | null>(null);
@@ -42,16 +38,16 @@ const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
         clearInterval(count);
       }
     };
-  }, [status, label, text, buttonClicked]);
+  }, [status, label, text]);
 
-  const focusMouse = () => {
+  const handelMouseFocus = () => {
     setValue(value);
     if (count) {
       clearInterval(count);
     }
   };
 
-  const downMouse = () => {
+  const handleMouseDown = () => {
     currentValue = value;
     const count = setInterval(() => {
       if (currentValue <= maxValue) {
@@ -65,27 +61,33 @@ const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
     setCount(count);
   };
 
+  const getIconByStatus = (status: NotificationStatus) => {
+    if (status === 'success') {
+      return successIcon;
+    }
+    return errorIcon;
+  };
+
   return (
+    createPortal(
     <>
       {isVisible && (
-        <div className={styles.wrapper} onMouseEnter={focusMouse} onMouseLeave={downMouse}>
+        <div className={styles.wrapper} onMouseEnter={handelMouseFocus} onMouseLeave={handleMouseDown}>
           <div className={styles.notification}>
             <img 
-              src={status === 'success' ? successIcon : errorIcon}
+              src={getIconByStatus(status)}
               alt='statusIcon'
               className={styles.icon}
             />
             <div className={styles.info}>
               <label className={styles.label}>{label}</label>
               <p className={styles.text}>{text}</p>
-              <div className={styles.progressBar}>
-                <div className={styles.progressValue} style={{ width: `${value}%` }}></div>
-              </div>
+              <ProgressBar value={value}/>
             </div>
           </div>
         </div>
       )}
-    </>
+    </>, notification)
   )
 };
 

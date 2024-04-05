@@ -1,59 +1,62 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import Notification from './components/Notification/Notification';
 import { simulateServer } from './utils/simulateServer';
 import styles from './App.module.css';
 
-type NotificationStatus = 'success' | 'error';
+export type NotificationStatus = 'success' | 'error';
 
-interface Notification {
+export interface NotificationProps {
   status: NotificationStatus;
   label: string;
   text: string;
 }
 
 const App = () => {
-  const [buttonClicked, setButtonClicked] = useState(false);
-  const [notification, setNotification] = useState<Notification>({
+  const [isVisible, setIsVisible] = useState(false);
+  const [notificationKey, setNotificationKey] = useState(0);
+  const [notification, setNotification] = useState<NotificationProps>({
     status: 'success',
     label: 'Успешно',
     text: 'Изменения успешно сохранены',
   });
 
   const handlerClick = async () => {
-    try {
-      await simulateServer();
-      setButtonClicked(!buttonClicked);
-      setNotification({
-        status: 'success',
-        label: 'Успешно',
-        text: 'Изменения успешно сохранены',
+    await simulateServer()
+      .then(() => {
+        setIsVisible(true);
+        setNotification({
+          status: 'success',
+          label: 'Успешно',
+          text: 'Изменения успешно сохранены',
+        });
+        setNotificationKey((prevKey) => prevKey + 1);
+      })
+      .catch(() => {
+        setIsVisible(true);
+        setNotification({
+          status: 'error',
+          label: 'Изменения не сохранены',
+          text: 'Потеря интернет соединения',
+        });
+        setNotificationKey((prevKey) => prevKey + 1);
       });
-    } catch (error) {
-      setButtonClicked(!buttonClicked);
-      setNotification({
-        status: 'error',
-        label: 'Изменения не сохранены',
-        text: 'Потеря интернет соединения',
-      });
-    }
   };
 
   return (
     <div className={styles.wrapper}>
-      {createPortal(
-        <Notification 
+      {isVisible && (
+        <Notification
+          key={notificationKey}
           status={notification.status}
           label={notification.label}
           text={notification.text}
-          buttonClicked={buttonClicked}
-        />,
-        document.body
+        />
       )}
-      <button
-        className={styles.btnStart} onClick={handlerClick}>Сохранить изменения</button>
+      <button className={styles.btnStart} onClick={handlerClick}>
+        Сохранить изменения
+      </button>
     </div>
   );
-}
+};
 
 export default App;
