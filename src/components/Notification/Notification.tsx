@@ -68,7 +68,7 @@ const Notification: FC<Props> = ({ status, label, text, buttonClicked }) => {
   return (
     <>
       {isVisible && (
-        <div className={styles.wrapper}  onMouseEnter={focusMouse} onMouseLeave={downMouse}>
+        <div className={styles.wrapper} onMouseEnter={focusMouse} onMouseLeave={downMouse}>
           <div className={styles.notification}>
             <img 
               src={status === 'success' ? successIcon : errorIcon}
