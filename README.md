@@ -8,25 +8,25 @@
 #### Команды
 Установка
 ```
-   npm i
+npm i
 ```
 
 Запуск
 ```
-    npm start
+npm start
 ```
 
 Сборка
 ```
-    make build
+make build
 ```
 
 Запуск с Докере
 ```
-    make run
+make run
 ```
 
 Тестирование
 ```
-    make test
+make test
 ```
